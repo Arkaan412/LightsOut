@@ -2,8 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
-import java.awt.Color;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Vista {
 
@@ -37,11 +37,16 @@ public class Vista {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 380, 328);
+		frame.setBounds(100, 100, 372, 323);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JToggleButton tglbtn_00 = new JToggleButton();
+		tglbtn_00.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				botonApretado.(tglbtn_00);
+			}
+		});
 		tglbtn_00.setBounds(0, 0, 121, 96);
 		frame.getContentPane().add(tglbtn_00);
 		
