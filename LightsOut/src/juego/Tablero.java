@@ -1,24 +1,25 @@
+package juego;
+
 import java.util.ArrayList;
 
 public class Tablero {
 	private boolean[][] tablero;
 	private ArrayList<ObserverEstadoCelda> observersEstadoCelda;
-	
-	public Tablero(int tamanioMatriz) {
-		tablero = new boolean[tamanioMatriz][tamanioMatriz];
 
-		inicializarMatriz();
+	public Tablero(int tamanioTablero) {
+		if (tamanioTablero <= 0)
+			throw new IllegalArgumentException("El tablero debe al menos uina celda!");
+
+		tablero = new boolean[tamanioTablero][tamanioTablero];
 		observersEstadoCelda = new ArrayList<ObserverEstadoCelda>();
-	}
 
-	private void inicializarMatriz() {
-		for (int i = 0; i < tablero.length; i++) {
-			for (int j = 0; j < tablero[i].length; j++) {
-				tablero[i][j] = false;
+		for (int fila = 0; fila < tablero.length; fila++) {
+			for (int columna = 0; columna < tablero[fila].length; columna++) {
+				tablero[fila][columna] = false;
 			}
 		}
 	}
-	
+
 	public int tamanio() {
 		return tablero.length;
 	}
@@ -35,8 +36,9 @@ public class Tablero {
 		return tablero[columna];
 	}
 
-
 	public void invertirValorCelda(int fila, int columna) {
+		validarNroFilaYColumna(fila, columna);
+
 		boolean valorActualCelda = obtenerValorCelda(fila, columna);
 		boolean nuevoValor = !valorActualCelda;
 
@@ -44,44 +46,52 @@ public class Tablero {
 		notificarObserversEstadoCelda();
 	}
 
-	private void notificarObserversEstadoCelda() {
-		for(ObserverEstadoCelda observer: observersEstadoCelda) {
-			observer.notificar();
-		}
+	private void validarNroFilaYColumna(int fila, int columna) {
+		if (fila < 0 || fila > this.tamanio() - 1)
+			throw new IndexOutOfBoundsException();
+
+		if (columna < 0 || columna > this.tamanio() - 1)
+			throw new IndexOutOfBoundsException();
 	}
 
 	public void invertirValorFila(int fila) {
-		for (int i = 0; i < tablero.length; i++) {
-			invertirValorCelda(fila, i);
+		for (int columna = 0; columna < tablero.length; columna++) {
+			invertirValorCelda(fila, columna);
 		}
 	}
 
 	public void invertirValorColumna(int columna) {
-		for (int i = 0; i < tablero.length; i++) {
-			invertirValorCelda(i, columna);
+		for (int fila = 0; fila < tablero.length; fila++) {
+			invertirValorCelda(fila, columna);
 		}
 	}
 
 	@Override
 	public String toString() {
 		String cadena = "";
-		for (int i = 0; i < tablero.length; i++) {
-			for (int j = 0; j < tablero.length; j++) {
-				cadena += tablero[i][j];
+		for (int fila = 0; fila < tablero.length; fila++) {
+			for (int columna = 0; columna < tablero.length; columna++) {
+				cadena += tablero[fila][columna];
 				cadena += ", ";
 			}
 			cadena += "\n";
 		}
 		return cadena;
 	}
-	
+
 	public void registrarObserverEstadoCelda(ObserverEstadoCelda observer) {
 		observersEstadoCelda.add(observer);
 	}
 
+	private void notificarObserversEstadoCelda() {
+		for (ObserverEstadoCelda observer : observersEstadoCelda) {
+			observer.notificar();
+		}
+	}
+
 	public static void main(String[] args) {
 		Tablero tablero = new Tablero(3);
-		
+
 		System.out.println(tablero.toString());
 	}
 }
