@@ -43,7 +43,7 @@ public class Tablero {
 		boolean nuevoValor = !valorActualCelda;
 
 		tablero[fila][columna] = nuevoValor;
-		notificarObserversEstadoCelda();
+		notificarObserversEstadoCelda(fila, columna);
 	}
 
 	private void validarNroFilaYColumna(int fila, int columna) {
@@ -66,32 +66,32 @@ public class Tablero {
 		}
 	}
 
-	@Override
-	public String toString() {
-		String cadena = "";
-		for (int fila = 0; fila < tablero.length; fila++) {
-			for (int columna = 0; columna < tablero.length; columna++) {
-				cadena += tablero[fila][columna];
-				cadena += ", ";
-			}
-			cadena += "\n";
-		}
-		return cadena;
-	}
-
 	public void registrarObserverEstadoCelda(ObserverEstadoCelda observer) {
 		observersEstadoCelda.add(observer);
 	}
 
-	private void notificarObserversEstadoCelda() {
+	private void notificarObserversEstadoCelda(int fila, int columna) {
 		for (ObserverEstadoCelda observer : observersEstadoCelda) {
-			observer.notificar();
+			observer.actualizar(fila, columna);
 		}
 	}
 
-	public static void main(String[] args) {
-		Tablero tablero = new Tablero(3);
+//	@Override
+//	public String toString() {
+//		String cadena = "";
+//		for (int fila = 0; fila < tablero.length; fila++) {
+//			for (int columna = 0; columna < tablero.length; columna++) {
+//				cadena += tablero[fila][columna];
+//				cadena += ", ";
+//			}
+//			cadena += "\n";
+//		}
+//		return cadena;
+//	}
 
-		System.out.println(tablero.toString());
-	}
+//	public static void main(String[] args) {
+//		Tablero tablero = new Tablero(3);
+//
+//		System.out.println(tablero.toString());
+//	}
 }
