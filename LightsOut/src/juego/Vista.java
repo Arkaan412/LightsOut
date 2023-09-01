@@ -5,12 +5,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class Vista implements ObserverEstadoCelda {
 
 	private JFrame frame;
+	JToggleButton tglbtn_00 = new JToggleButton();
 
 	/**
 	 * Launch the application.
@@ -44,10 +44,9 @@ public class Vista implements ObserverEstadoCelda {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JToggleButton tglbtn_00 = new JToggleButton();
 		tglbtn_00.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				botonApretado.(tglbtn_00);
+				Controlador.botonApretado(0, 0);
 			}
 		});
 		tglbtn_00.setBounds(0, 0, 121, 96);
@@ -89,6 +88,10 @@ public class Vista implements ObserverEstadoCelda {
 
 	@Override
 	public void actualizar(int fila, int columna) {
-
+		if (fila == 0 && columna == 0) {
+			boolean estaPrendido = tglbtn_00.isSelected();
+			tglbtn_00.setSelected(!estaPrendido);
+			
+		}
 	}
 }

@@ -7,8 +7,8 @@ public class Tablero {
 	private ArrayList<ObserverEstadoCelda> observersEstadoCelda;
 
 	public Tablero(int tamanioTablero) {
-		if (tamanioTablero <= 0)
-			throw new IllegalArgumentException("El tablero debe al menos uina celda!");
+		if (tamanioTablero <= 2)
+			throw new IllegalArgumentException("El tablero debe tener un tamaño de, al menos, 2x2");
 
 		tablero = new boolean[tamanioTablero][tamanioTablero];
 		observersEstadoCelda = new ArrayList<ObserverEstadoCelda>();
