@@ -1,13 +1,13 @@
 package juego;
 
 public class Controlador {
-	private static Tablero tablero;
+	private static MatrizBotonCelda tablero;
 	
-	public Controlador(Tablero t) {
+	public Controlador(MatrizBotonCelda t) {
 		tablero = t;
 	}
 	
-	public static void botonApretado(int fila, int columna) {
-		tablero.invertirValorCelda(fila, columna);
-	}
+//	public static void botonApretado(int fila, int columna) {
+//		tablero.invertirValorCelda(fila, columna);
+//	}
 }

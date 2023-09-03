@@ -46,7 +46,7 @@ public class Vista implements ObserverEstadoCelda {
 
 		tglbtn_00.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controlador.botonApretado(0, 0);
+//				Controlador.botonApretado(0, 0);
 			}
 		});
 		tglbtn_00.setBounds(0, 0, 121, 96);
