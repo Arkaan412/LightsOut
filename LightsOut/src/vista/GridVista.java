@@ -1,4 +1,4 @@
-package juego;
+package vista;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -74,24 +74,24 @@ public class GridVista {
 			}
 		});
 		frame.getContentPane().add(button1);
-		JButton button2 = new JButton("2");
-		button2.setContentAreaFilled(false);
-		button2.setOpaque(true);
-
-		button2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (button2.isSelected()) {
-//					button1.setContentAreaFilled(false);
-//					button1.setOpaque(true);
-					button2.setBackground(Color.GREEN.darker());
-				} else {
-//					button1.setContentAreaFilled(false);
-//					button1.setOpaque(true);
-					button2.setBackground(Color.GREEN);
-					
-				}
-			}
-		});
+		JToggleButton button2 = new JToggleButton("2");
+//		button2.setContentAreaFilled(false);
+//		button2.setOpaque(true);
+//		button2.setBackground(Color.GREEN);
+//		button2.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				if (button2.isSelected()) {
+////					button2.setContentAreaFilled(false);
+////					button2.setOpaque(true);
+//					button2.setBackground(Color.GREEN.darker());
+//				} else {
+////					button2.setContentAreaFilled(false);
+////					button2.setOpaque(true);
+//					button2.setBackground(Color.GREEN);
+//					
+//				}
+//			}
+//		});
 		frame.getContentPane().add(button2);
 		JButton button3 = new JButton("3");
 		frame.getContentPane().add(button3);

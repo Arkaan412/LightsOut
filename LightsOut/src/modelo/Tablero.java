@@ -1,26 +1,30 @@
-package juego;
+package modelo;
 
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.ArrayList;
 
-public class MatrizBotonCelda {
-	BotonCelda[][] botones;
+import vista.ObserverEstadoCelda;
 
-	public MatrizBotonCelda(int tamanio) {
+public class Tablero {
+	Celda[][] botones;
+	ArrayList<ObserverEstadoCelda> observers;
+
+	public Tablero(int tamanio) {
 		if (tamanio < 2)
 			throw new IllegalArgumentException("La matriz debe tener un tamaño de, al menos, 2x2");
 
-		botones = new BotonCelda[tamanio][tamanio];
+		botones = new Celda[tamanio][tamanio];
 
 		for (int fila = 0; fila < tamanio; fila++) {
 			for (int columna = 0; columna < tamanio; columna++) {
-				BotonCelda botonNuevo = new BotonCelda(fila, columna);
+				Celda botonNuevo = new Celda(fila, columna);
 				botones[fila][columna] = botonNuevo;
 			}
 		}
+
+		observers = new ArrayList<ObserverEstadoCelda>();
 	}
 
-	public BotonCelda[][] getBotones() {
+	public Celda[][] getBotones() {
 		return botones;
 	}
 
@@ -28,16 +32,16 @@ public class MatrizBotonCelda {
 		return botones.length;
 	}
 
-	public BotonCelda[] obtenerFila(int fila) {
+	public Celda[] obtenerFila(int fila) {
 		validarFila(fila);
 
 		return botones[fila];
 	}
 
-	public BotonCelda[] obtenerColumna(int columna) {
+	public Celda[] obtenerColumna(int columna) {
 		validarColumna(columna);
 
-		BotonCelda[] columnaARetornar = new BotonCelda[tamanio()];
+		Celda[] columnaARetornar = new Celda[tamanio()];
 
 		for (int fila = 0; fila < botones.length; fila++) {
 			columnaARetornar[fila] = botones[fila][columna];
@@ -50,14 +54,14 @@ public class MatrizBotonCelda {
 		if (fila < 0 || fila >= tamanio())
 			throw new IllegalArgumentException("La fila indicada no es válida: " + fila);
 	}
-	
+
 	private void validarColumna(int columna) {
 		if (columna < 0 || columna >= tamanio())
 			throw new IllegalArgumentException("La columna indicada no es válida: " + columna);
 	}
-	
+
 	public void invertirEstadoFila(int fila) {
-		BotonCelda[] filaAInvertir = obtenerFila(fila);
+		Celda[] filaAInvertir = obtenerFila(fila);
 
 		for (int indiceFila = 0; indiceFila < filaAInvertir.length; indiceFila++) {
 			filaAInvertir[indiceFila].invertirEstadoCelda();
@@ -66,10 +70,28 @@ public class MatrizBotonCelda {
 	}
 
 	public void invertirEstadoColumna(int columna) {
-		BotonCelda[] columnaAInvertir = obtenerColumna(columna);
-		
+		Celda[] columnaAInvertir = obtenerColumna(columna);
+
 		for (int indiceColumna = 0; indiceColumna < columnaAInvertir.length; indiceColumna++) {
 			columnaAInvertir[indiceColumna].invertirEstadoCelda();
+		}
+	}
+
+	public void invertirEstadoCruz(int fila, int columna) {
+		invertirEstadoFila(fila);
+		invertirEstadoColumna(columna);
+		botones[fila][columna].invertirEstadoCelda();
+
+		notificarObservadores(fila, columna);
+	}
+
+	public void registrarObserver(ObserverEstadoCelda observer) {
+		observers.add(observer);
+	}
+
+	private void notificarObservadores(int fila, int columna) {
+		for (ObserverEstadoCelda observer : observers) {
+			observer.actualizar(fila, columna);
 		}
 	}
 }
