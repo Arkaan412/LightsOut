@@ -33,6 +33,8 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 		celdas = new BotonCelda[tamanio][tamanio];
 
 		cargarCeldas();
+
+		sincronizarTableroConVista();
 	}
 
 	private void cargarCeldas() {
@@ -131,5 +133,17 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 		invertirEstadoFila(fila);
 		invertirEstadoColumna(columna);
 		invertirEstadoCelda(celdas[fila][columna]);
+	}
+
+	public void sincronizarTableroConVista() {
+		boolean[][] tableroVista = new boolean[tamanio][tamanio];
+
+		for (int fila = 0; fila < tamanio; fila++) {
+			for (int columna = 0; columna < tamanio; columna++) {
+				tableroVista[fila][columna] = celdas[fila][columna].isSelected();
+			}
+		}
+		
+		controlador.sincronizarTableroConVista(tableroVista);
 	}
 }

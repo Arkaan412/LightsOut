@@ -9,6 +9,10 @@ public class Controlador {
 		this.tablero = tablero;
 	}
 
+	public void sincronizarTableroConVista(boolean[][] tableroVista) {
+		tablero.sincronizarTableroConVista(tableroVista);
+	}
+
 	public void botonApretado(int fila, int columna) {
 		tablero.invertirEstadoCruz(fila, columna);
 

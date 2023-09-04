@@ -25,4 +25,8 @@ public class Celda {
 	public void invertirEstadoCelda() {
 		estado = !estado;
 	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado; 
+	}
 }

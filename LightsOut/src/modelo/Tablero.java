@@ -106,4 +106,12 @@ public class Tablero {
 		System.out.println("Victoria!");
 		return true;
 	}
+	
+	public void sincronizarTableroConVista(boolean[][] tableroVista) {
+		for (int fila = 0; fila < botones.length; fila++) {
+			for (int columna = 0; columna < botones.length; columna++) {
+				botones[fila][columna].setEstado(tableroVista[fila][columna]);
+			}
+		}
+	}
 }
