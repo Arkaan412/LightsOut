@@ -25,7 +25,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 600, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.getContentPane().setLayout(new GridLayout(tamanio, tamanio, 0, 0));
@@ -40,7 +40,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 			for (int columna = 0; columna < celdas.length; columna++) {
 				BotonCelda boton = new BotonCelda(fila, columna);
 
-				boton.setText(fila + " - " + columna);
+				boton.setText(fila + " - " + columna); // SACAR
 
 				frame.getContentPane().add(boton);
 
@@ -106,7 +106,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		BotonCelda boton = (BotonCelda) evento.getSource();
-		System.out.println("actionPerformed" + boton.isSelected());
+
 		controlador.botonApretado(boton.getFila(), boton.getColumna());
 	}
 
@@ -130,8 +130,6 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 	public void invertirEstadoCruz(int fila, int columna) {
 		invertirEstadoFila(fila);
 		invertirEstadoColumna(columna);
-		
-		System.out.println("invertirEstadoCruz " + celdas[fila][columna].isSelected());
-//		invertirEstadoCelda(celdas[fila][columna]);
+		invertirEstadoCelda(celdas[fila][columna]);
 	}
 }

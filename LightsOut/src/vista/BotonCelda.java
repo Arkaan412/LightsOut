@@ -3,9 +3,9 @@ package vista;
 import java.awt.Color;
 import java.awt.Container;
 
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
-public class BotonCelda extends JToggleButton{
+public class BotonCelda extends JButton{
 	private static final long serialVersionUID = 1L;
 
 	private int fila, columna;
@@ -13,11 +13,20 @@ public class BotonCelda extends JToggleButton{
 	public BotonCelda(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;
-		
-		this.setContentAreaFilled(false);
-		this.setOpaque(true);
 
-		this.setSelectedTrue();
+		this.randomizarEstadoInicial();
+//		this.setSelectedTrue();
+	}
+
+	private void randomizarEstadoInicial() {
+		double random = Math.random();
+		
+		random = random * 10.0;
+		
+		if (random > 5)
+			setSelectedFalse();
+		else
+			setSelectedTrue();
 		
 	}
 
@@ -43,11 +52,11 @@ public class BotonCelda extends JToggleButton{
 
 	private void setSelectedTrue() {
 		this.setSelected(true);
-		this.setBackground(Color.GREEN);
+		this.setBackground(Color.YELLOW);
 	}
 
 	private void setSelectedFalse() {
 		this.setSelected(false);
-		this.setBackground(Color.GREEN.darker());
+		this.setBackground(Color.GRAY.darker());
 	}
 }

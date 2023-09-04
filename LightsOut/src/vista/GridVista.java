@@ -94,6 +94,12 @@ public class GridVista {
 //		});
 		frame.getContentPane().add(button2);
 		JButton button3 = new JButton("3");
+		button3.setOpaque(false);
+		button3.setBackground(new Color(0, 255, 0));
+		button3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		frame.getContentPane().add(button3);
 		JButton button4 = new JButton("4");
 		frame.getContentPane().add(button4);

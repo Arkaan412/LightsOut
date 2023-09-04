@@ -7,7 +7,7 @@ public class Celda {
 	public Celda(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;
-		this.estado = false;
+		this.estado = true;
 	}
 
 	public int getFila() {

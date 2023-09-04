@@ -144,14 +144,6 @@ public class PantallaDeJuegoTests {
 		BotonCelda[] columna = pantalla.obtenerColumna(0);
 
 		pantalla.invertirEstadoCruz(0, 0);
-
-//		assertFalse(fila[0].isSelected());
-//		assertFalse(fila[1].isSelected());
-//		assertFalse(fila[2].isSelected());
-//		
-//		assertFalse(columna[0].isSelected());
-//		assertFalse(columna[1].isSelected());
-//		assertFalse(columna[2].isSelected());
 		
 		for (int indiceFila = 0; indiceFila < fila.length; indiceFila++) {
 			if ((fila[indiceFila].isSelected())) System.out.println(indiceFila);

@@ -81,7 +81,7 @@ public class Tablero {
 		invertirEstadoFila(fila);
 		invertirEstadoColumna(columna);
 		botones[fila][columna].invertirEstadoCelda();
-
+		
 		notificarObservadores(fila, columna);
 	}
 
@@ -93,5 +93,17 @@ public class Tablero {
 		for (ObserverEstadoCelda observer : observers) {
 			observer.actualizar(fila, columna);
 		}
+	}
+
+	public boolean verificarVictoria() {
+		for (int fila = 0; fila < botones.length; fila++) {
+			for (int columna = 0; columna < botones.length; columna++) {
+				if (botones[fila][columna].getEstado() == true) {
+					return false;
+				}
+			}
+		}
+		System.out.println("Victoria!");
+		return true;
 	}
 }
