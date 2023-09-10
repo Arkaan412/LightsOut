@@ -11,7 +11,7 @@ public class TableroTests {
 	@Test
 	public void asignacionCorrectaDeFilaYColumnaEnBotonesTest() {
 		Tablero matriz = new Tablero(2);
-		Celda[][] botones = matriz.getBotones();
+		Celda[][] botones = matriz.getCeldas();
 
 		Celda boton0 = botones[0][0];
 		Celda boton1 = botones[0][1];

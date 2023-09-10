@@ -15,7 +15,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 	private JFrame frame;
 	private Controlador controlador;
 
-	private BotonCelda[][] celdas;
+	private BotonCelda[][] botones;
 	private int tamanio;;
 
 	public PantallaDeJuego(Controlador controlador, int tamanio) {
@@ -32,16 +32,14 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 
 		frame.getContentPane().setLayout(new GridLayout(tamanio, tamanio, 0, 0));
 
-		celdas = new BotonCelda[tamanio][tamanio];
+		botones = new BotonCelda[tamanio][tamanio];
 
-		cargarCeldas();
-
-		sincronizarTableroConVista();
+		inicializarYCargarBotones();
 	}
 
-	private void cargarCeldas() {
-		for (int fila = 0; fila < celdas.length; fila++) {
-			for (int columna = 0; columna < celdas.length; columna++) {
+	private void inicializarYCargarBotones() {
+		for (int fila = 0; fila < botones.length; fila++) {
+			for (int columna = 0; columna < botones.length; columna++) {
 				BotonCelda boton = new BotonCelda(fila, columna);
 
 				boton.setText(fila + " - " + columna); // SACAR
@@ -50,13 +48,17 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 
 				boton.addActionListener(this);
 
-				celdas[fila][columna] = boton;
+				botones[fila][columna] = boton;
 			}
 		}
 	}
 
-	private void invertirEstadoCelda(BotonCelda celda) {
-		celda.invertirEstado();
+	public void mostrarPantalla() {
+		frame.setVisible(true);
+	}
+
+	private void invertirEstadoBoton(BotonCelda boton) {
+		boton.invertirEstado();
 	}
 
 	private void validarFila(int fila) {
@@ -72,7 +74,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 	public BotonCelda[] obtenerFila(int fila) {
 		validarFila(fila);
 
-		return celdas[fila];
+		return botones[fila];
 	}
 
 	public BotonCelda[] obtenerColumna(int columna) {
@@ -80,22 +82,22 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 
 		BotonCelda[] columnaARetornar = new BotonCelda[tamanio];
 
-		for (int fila = 0; fila < celdas.length; fila++) {
-			columnaARetornar[fila] = celdas[fila][columna];
+		for (int fila = 0; fila < botones.length; fila++) {
+			columnaARetornar[fila] = botones[fila][columna];
 		}
 
 		return columnaARetornar;
 	}
 
 	public BotonCelda[][] obtenerCeldas() {
-		return celdas;
+		return botones;
 	}
 
 	public void invertirEstadoFila(int fila) {
 		BotonCelda[] filaAInvertir = obtenerFila(fila);
 
 		for (int indiceFila = 0; indiceFila < filaAInvertir.length; indiceFila++) {
-			invertirEstadoCelda(filaAInvertir[indiceFila]);
+			invertirEstadoBoton(filaAInvertir[indiceFila]);
 		}
 	}
 
@@ -103,10 +105,33 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 		BotonCelda[] columnaAInvertir = obtenerColumna(columna);
 
 		for (int indiceColumna = 0; indiceColumna < columnaAInvertir.length; indiceColumna++) {
-			invertirEstadoCelda(columnaAInvertir[indiceColumna]);
+			invertirEstadoBoton(columnaAInvertir[indiceColumna]);
 		}
 	}
 
+	public void invertirEstadoCruz(int fila, int columna) {
+		invertirEstadoFila(fila);
+		invertirEstadoColumna(columna);
+		invertirEstadoBoton(botones[fila][columna]);
+	}
+
+	public void sincronizarTableroConVista() {
+		controlador.sincronizarTableroConVista();
+	}
+
+	@Override
+	public void actualizar(boolean[][] valoresDelTablero) {
+		boolean[][] matriz = new boolean[tamanio][tamanio];
+		
+		for (int fila = 0; fila < botones.length; fila++) {
+			for (int columna = 0; columna < botones.length; columna++) {
+				boolean estadoActualizado = valoresDelTablero[fila][columna];
+				matriz[fila][columna] = valoresDelTablero[fila][columna];
+				botones[fila][columna].setEstado(estadoActualizado);
+			}
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		BotonCelda boton = (BotonCelda) evento.getSource();
@@ -119,38 +144,21 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 		invertirEstadoCruz(fila, columna);
 	}
 
-	public void mostrarPantalla() {
-		frame.setVisible(true);
-	}
-
-	public void invertirEstadoCruz(int fila, int columna) {
-		invertirEstadoFila(fila);
-		invertirEstadoColumna(columna);
-		invertirEstadoCelda(celdas[fila][columna]);
-	}
-
-	public void sincronizarTableroConVista() {
-		boolean[][] tableroVista = new boolean[tamanio][tamanio];
-
-		for (int fila = 0; fila < tamanio; fila++) {
-			for (int columna = 0; columna < tamanio; columna++) {
-				tableroVista[fila][columna] = celdas[fila][columna].isSelected();
-			}
-		}
-
-		controlador.sincronizarTableroConVista(tableroVista);
+	@Override
+	public void notificar() {
+		victoria();
 	}
 
 	public void victoria() {
 		PantallaFinal pantallaFinal;
-		pantallaFinal = new PantallaFinal(controlador);
+		pantallaFinal = new PantallaFinal(this, controlador);
 
+		pantallaFinal.setLocationRelativeTo(frame);
 		pantallaFinal.setModal(true);
 		pantallaFinal.setVisible(true);
 	}
 
-	@Override
-	public void notificar() {
-		victoria();
+	public JFrame getFrame() {
+		return frame;
 	}
 }

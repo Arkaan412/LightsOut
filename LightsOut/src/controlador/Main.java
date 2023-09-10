@@ -12,10 +12,11 @@ public class Main {
 		Controlador controlador = new Controlador(tablero);
 
 		PantallaDeJuego pantallaDeJuego = new PantallaDeJuego(controlador, tamanioTablero);
-
+		
 		tablero.registrarObserverEstadoCelda(pantallaDeJuego);
 		tablero.registrarObserverEstadoJuego(pantallaDeJuego);
-		
+
+		pantallaDeJuego.sincronizarTableroConVista();
 		pantallaDeJuego.mostrarPantalla();
 	}
 }

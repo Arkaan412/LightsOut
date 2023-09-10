@@ -9,8 +9,8 @@ public class Controlador {
 		this.tablero = tablero;
 	}
 
-	public void sincronizarTableroConVista(boolean[][] tableroVista) {
-		tablero.sincronizarTableroConVista(tableroVista);
+	public void sincronizarTableroConVista() {
+		tablero.sincronizarTableroConVista();
 	}
 
 	public void botonApretado(int fila, int columna) {
@@ -20,6 +20,6 @@ public class Controlador {
 	}
 	
 	public void jugarDeNuevo() {
-		tablero.juegarDeNuevo();
+		tablero.jugarDeNuevo();
 	}
 }

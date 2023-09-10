@@ -6,7 +6,7 @@ import observers.ObserverEstadoCeldas;
 import observers.ObserverEstadoJuego;
 
 public class Tablero {
-	Celda[][] botones;
+	Celda[][] celdas;
 	ArrayList<ObserverEstadoCeldas> observersEstadoCeldas;
 	ArrayList<ObserverEstadoJuego> observersEstadoJuego;
 
@@ -14,31 +14,35 @@ public class Tablero {
 		if (tamanio < 2)
 			throw new IllegalArgumentException("La matriz debe tener un tamaño de, al menos, 2x2");
 
-		botones = new Celda[tamanio][tamanio];
+		celdas = new Celda[tamanio][tamanio];
 
-		for (int fila = 0; fila < tamanio; fila++) {
-			for (int columna = 0; columna < tamanio; columna++) {
-				Celda botonNuevo = new Celda(fila, columna);
-				botones[fila][columna] = botonNuevo;
-			}
-		}
+		inicializarTablero();
 
 		observersEstadoCeldas = new ArrayList<ObserverEstadoCeldas>();
 		observersEstadoJuego = new ArrayList<ObserverEstadoJuego>();
 	}
+	
+	private void inicializarTablero() {
+		for (int fila = 0; fila < tamanio(); fila++) {
+			for (int columna = 0; columna < tamanio(); columna++) {
+				Celda celdaNueva = new Celda(fila, columna);
+				celdas[fila][columna] = celdaNueva;
+			}
+		}
+	}
 
-	public Celda[][] getBotones() {
-		return botones;
+	public Celda[][] getCeldas() {
+		return celdas;
 	}
 
 	public int tamanio() {
-		return botones.length;
+		return celdas.length;
 	}
 
 	public Celda[] obtenerFila(int fila) {
 		validarFila(fila);
 
-		return botones[fila];
+		return celdas[fila];
 	}
 
 	public Celda[] obtenerColumna(int columna) {
@@ -46,8 +50,8 @@ public class Tablero {
 
 		Celda[] columnaARetornar = new Celda[tamanio()];
 
-		for (int fila = 0; fila < botones.length; fila++) {
-			columnaARetornar[fila] = botones[fila][columna];
+		for (int fila = 0; fila < celdas.length; fila++) {
+			columnaARetornar[fila] = celdas[fila][columna];
 		}
 
 		return columnaARetornar;
@@ -83,21 +87,22 @@ public class Tablero {
 	public void invertirEstadoCruz(int fila, int columna) {
 		invertirEstadoFila(fila);
 		invertirEstadoColumna(columna);
-		botones[fila][columna].invertirEstadoCelda();
-		
-		notificarObservadoresEstadoCelda(fila, columna);
+		celdas[fila][columna].invertirEstadoCelda();
+
+		notificarObservadoresEstadoCeldas(fila, columna);
 	}
 
 	public void registrarObserverEstadoCelda(ObserverEstadoCeldas observer) {
 		observersEstadoCeldas.add(observer);
 	}
-	
-	private void notificarObservadoresEstadoCelda(int fila, int columna) {
+
+	private void notificarObservadoresEstadoCeldas(int fila, int columna) {
 		for (ObserverEstadoCeldas observer : observersEstadoCeldas) {
 			observer.actualizar(fila, columna);
 		}
 	}
-	public void registrarObserverEstadoJuego (ObserverEstadoJuego observer) {
+
+	public void registrarObserverEstadoJuego(ObserverEstadoJuego observer) {
 		observersEstadoJuego.add(observer);
 	}
 
@@ -108,27 +113,38 @@ public class Tablero {
 	}
 
 	public void verificarVictoria() {
-		for (int fila = 0; fila < botones.length; fila++) {
-			for (int columna = 0; columna < botones.length; columna++) {
-				if (botones[fila][columna].getEstado() == true) {
+		for (int fila = 0; fila < celdas.length; fila++) {
+			for (int columna = 0; columna < celdas.length; columna++) {
+				if (celdas[fila][columna].getEstado() == true) {
 					return;
 				}
 			}
 		}
-//		System.out.println("Victoria!");
 		notificarObservadoresEstadoJuego();
 	}
-	
-	public void sincronizarTableroConVista(boolean[][] tableroVista) {
-		for (int fila = 0; fila < botones.length; fila++) {
-			for (int columna = 0; columna < botones.length; columna++) {
-				botones[fila][columna].setEstado(tableroVista[fila][columna]);
+
+	public void sincronizarTableroConVista() {
+		int tamanioTablero = celdas.length;
+
+		boolean[][] valoresDelTablero = new boolean[tamanioTablero][tamanioTablero];
+
+		for (int fila = 0; fila < celdas.length; fila++) {
+			for (int columna = 0; columna < celdas.length; columna++) {
+				boolean estado = celdas[fila][columna].getEstado();
+
+				valoresDelTablero[fila][columna] = estado;
 			}
+		}
+
+		for (ObserverEstadoCeldas observer : observersEstadoCeldas) {
+			observer.actualizar(valoresDelTablero);
 		}
 	}
 
-	public void juegarDeNuevo() {
-		// TODO Auto-generated method stub
+	public void jugarDeNuevo() {
+		inicializarTablero();
+		sincronizarTableroConVista();
+		System.out.println("jugardenuevo");
 		
 	}
 }

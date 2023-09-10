@@ -3,7 +3,6 @@ package vista;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -14,9 +13,11 @@ import controlador.Controlador;
 public class PantallaFinal extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
+	private PantallaDeJuego pantallaDeJuego;
 	private Controlador controlador;
 
-	public PantallaFinal(Controlador controlador) {
+	public PantallaFinal(PantallaDeJuego pantallaDeJuego, Controlador controlador) {
+		this.pantallaDeJuego = pantallaDeJuego;
 		this.controlador = controlador;
 		
 		setBounds(100, 100, 450, 300);
@@ -41,6 +42,7 @@ public class PantallaFinal extends JDialog {
 		btnSi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Piola");
+				jugarDeNuevo();
 			}
 		});
 		btnSi.setBounds(110, 112, 89, 23);
@@ -51,9 +53,19 @@ public class PantallaFinal extends JDialog {
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Mal ahí");
+				cerrarJuego();
 			}
 		});
 		btnNo.setBounds(238, 112, 89, 23);
 		getContentPane().add(btnNo);
+	}
+	
+	public void jugarDeNuevo() {
+		controlador.jugarDeNuevo();
+		dispose();
+	}
+	public void cerrarJuego() {
+		pantallaDeJuego.getFrame().dispose();
+		dispose();
 	}
 }
