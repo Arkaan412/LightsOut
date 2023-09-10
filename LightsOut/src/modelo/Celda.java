@@ -3,7 +3,7 @@ package modelo;
 public class Celda {
 	private int fila, columna;
 	private boolean estado;
-	
+
 	public Celda(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;
@@ -21,12 +21,12 @@ public class Celda {
 	public boolean getEstado() {
 		return estado;
 	}
-	
+
 	public void invertirEstadoCelda() {
 		estado = !estado;
 	}
 
 	public void setEstado(boolean estado) {
-		this.estado = estado; 
+		this.estado = estado;
 	}
 }

@@ -1,25 +1,27 @@
 package vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 
 import controlador.Controlador;
+import observers.ObserverEstadoCeldas;
+import observers.ObserverEstadoJuego;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
+public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, ObserverEstadoJuego {
 
 	private JFrame frame;
-	private BotonCelda[][] celdas;
-	private int tamanio;
 	private Controlador controlador;
+
+	private BotonCelda[][] celdas;
+	private int tamanio;;
 
 	public PantallaDeJuego(Controlador controlador, int tamanio) {
 		this.controlador = controlador;
 		this.tamanio = tamanio;
+
 		initialize();
 	}
 
@@ -118,15 +120,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 	}
 
 	public void mostrarPantalla() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		frame.setVisible(true);
 	}
 
 	public void invertirEstadoCruz(int fila, int columna) {
@@ -143,7 +137,20 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCelda {
 				tableroVista[fila][columna] = celdas[fila][columna].isSelected();
 			}
 		}
-		
+
 		controlador.sincronizarTableroConVista(tableroVista);
+	}
+
+	public void victoria() {
+		PantallaFinal pantallaFinal;
+		pantallaFinal = new PantallaFinal(controlador);
+
+		pantallaFinal.setModal(true);
+		pantallaFinal.setVisible(true);
+	}
+
+	@Override
+	public void notificar() {
+		victoria();
 	}
 }

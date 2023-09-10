@@ -14,8 +14,9 @@ public class BotonCelda extends JButton{
 		this.fila = fila;
 		this.columna = columna;
 
-		this.randomizarEstadoInicial();
+//		this.randomizarEstadoInicial();
 //		this.setSelectedTrue();
+		this.setSelectedFalse();
 	}
 
 	private void randomizarEstadoInicial() {

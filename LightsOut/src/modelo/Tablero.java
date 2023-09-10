@@ -2,11 +2,13 @@ package modelo;
 
 import java.util.ArrayList;
 
-import vista.ObserverEstadoCelda;
+import observers.ObserverEstadoCeldas;
+import observers.ObserverEstadoJuego;
 
 public class Tablero {
 	Celda[][] botones;
-	ArrayList<ObserverEstadoCelda> observers;
+	ArrayList<ObserverEstadoCeldas> observersEstadoCeldas;
+	ArrayList<ObserverEstadoJuego> observersEstadoJuego;
 
 	public Tablero(int tamanio) {
 		if (tamanio < 2)
@@ -21,7 +23,8 @@ public class Tablero {
 			}
 		}
 
-		observers = new ArrayList<ObserverEstadoCelda>();
+		observersEstadoCeldas = new ArrayList<ObserverEstadoCeldas>();
+		observersEstadoJuego = new ArrayList<ObserverEstadoJuego>();
 	}
 
 	public Celda[][] getBotones() {
@@ -82,29 +85,38 @@ public class Tablero {
 		invertirEstadoColumna(columna);
 		botones[fila][columna].invertirEstadoCelda();
 		
-		notificarObservadores(fila, columna);
+		notificarObservadoresEstadoCelda(fila, columna);
 	}
 
-	public void registrarObserver(ObserverEstadoCelda observer) {
-		observers.add(observer);
+	public void registrarObserverEstadoCelda(ObserverEstadoCeldas observer) {
+		observersEstadoCeldas.add(observer);
 	}
-
-	private void notificarObservadores(int fila, int columna) {
-		for (ObserverEstadoCelda observer : observers) {
+	
+	private void notificarObservadoresEstadoCelda(int fila, int columna) {
+		for (ObserverEstadoCeldas observer : observersEstadoCeldas) {
 			observer.actualizar(fila, columna);
 		}
 	}
+	public void registrarObserverEstadoJuego (ObserverEstadoJuego observer) {
+		observersEstadoJuego.add(observer);
+	}
 
-	public boolean verificarVictoria() {
+	private void notificarObservadoresEstadoJuego() {
+		for (ObserverEstadoJuego observer : observersEstadoJuego) {
+			observer.notificar();
+		}
+	}
+
+	public void verificarVictoria() {
 		for (int fila = 0; fila < botones.length; fila++) {
 			for (int columna = 0; columna < botones.length; columna++) {
 				if (botones[fila][columna].getEstado() == true) {
-					return false;
+					return;
 				}
 			}
 		}
-		System.out.println("Victoria!");
-		return true;
+//		System.out.println("Victoria!");
+		notificarObservadoresEstadoJuego();
 	}
 	
 	public void sincronizarTableroConVista(boolean[][] tableroVista) {
@@ -113,5 +125,10 @@ public class Tablero {
 				botones[fila][columna].setEstado(tableroVista[fila][columna]);
 			}
 		}
+	}
+
+	public void juegarDeNuevo() {
+		// TODO Auto-generated method stub
+		
 	}
 }

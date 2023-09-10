@@ -13,7 +13,8 @@ public class Main {
 
 		PantallaDeJuego pantallaDeJuego = new PantallaDeJuego(controlador, tamanioTablero);
 
-		tablero.registrarObserver(pantallaDeJuego);
+		tablero.registrarObserverEstadoCelda(pantallaDeJuego);
+		tablero.registrarObserverEstadoJuego(pantallaDeJuego);
 		
 		pantallaDeJuego.mostrarPantalla();
 	}

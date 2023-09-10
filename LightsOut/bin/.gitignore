@@ -1,13 +1,5 @@
-/Controlador.class
-/Modelo.class
-/ObserverEstadoCelda.class
-/Tablero.class
-/TableroTest.class
-/Vista$1.class
-/Vista$2.class
-/Vista.class
-/tests/
-/juego/
 /vista/
 /modelo/
 /controlador/
+/observers/
+/tests/
