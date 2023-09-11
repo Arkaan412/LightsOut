@@ -18,7 +18,7 @@ public class Controlador {
 
 		tablero.verificarVictoria();
 	}
-	
+
 	public void jugarDeNuevo() {
 		tablero.jugarDeNuevo();
 	}

@@ -21,7 +21,7 @@ public class Tablero {
 		observersEstadoCeldas = new ArrayList<ObserverEstadoCeldas>();
 		observersEstadoJuego = new ArrayList<ObserverEstadoJuego>();
 	}
-	
+
 	private void inicializarTablero() {
 		for (int fila = 0; fila < tamanio(); fila++) {
 			for (int columna = 0; columna < tamanio(); columna++) {
@@ -73,7 +73,6 @@ public class Tablero {
 		for (int indiceFila = 0; indiceFila < filaAInvertir.length; indiceFila++) {
 			filaAInvertir[indiceFila].invertirEstadoCelda();
 		}
-
 	}
 
 	public void invertirEstadoColumna(int columna) {
@@ -144,7 +143,5 @@ public class Tablero {
 	public void jugarDeNuevo() {
 		inicializarTablero();
 		sincronizarTableroConVista();
-		System.out.println("jugardenuevo");
-		
 	}
 }
