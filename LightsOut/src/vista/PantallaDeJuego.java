@@ -42,7 +42,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 			for (int columna = 0; columna < botones.length; columna++) {
 				BotonCelda boton = new BotonCelda(fila, columna);
 
-				boton.setText(fila + " - " + columna); // SACAR
+//				boton.setText(fila + " - " + columna);
 
 				frame.getContentPane().add(boton);
 
@@ -122,7 +122,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 	@Override
 	public void actualizar(boolean[][] valoresDelTablero) {
 		boolean[][] matriz = new boolean[tamanio][tamanio];
-		
+
 		for (int fila = 0; fila < botones.length; fila++) {
 			for (int columna = 0; columna < botones.length; columna++) {
 				boolean estadoActualizado = valoresDelTablero[fila][columna];
@@ -131,7 +131,7 @@ public class PantallaDeJuego implements ActionListener, ObserverEstadoCeldas, Ob
 			}
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		BotonCelda boton = (BotonCelda) evento.getSource();

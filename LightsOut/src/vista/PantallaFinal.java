@@ -30,13 +30,13 @@ public class PantallaFinal extends JDialog {
 		lblGanaste.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGanaste.setBounds(80, 11, 103, 33);
 		lblGanaste.setFont(new Font("Verdana", Font.PLAIN, 20));
-		
+
 		getContentPane().add(lblGanaste);
 
 		JLabel lblJugarDeNuevo = new JLabel("¿Querés jugar de nuevo?");
 		lblJugarDeNuevo.setBounds(37, 55, 205, 28);
 		lblJugarDeNuevo.setFont(new Font("Verdana", Font.PLAIN, 16));
-		
+
 		getContentPane().add(lblJugarDeNuevo);
 
 		JButton btnSi = new JButton("Sí");
@@ -45,7 +45,6 @@ public class PantallaFinal extends JDialog {
 
 		btnSi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Piola");
 				jugarDeNuevo();
 			}
 		});
