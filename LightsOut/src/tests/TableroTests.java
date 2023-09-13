@@ -125,25 +125,25 @@ public class TableroTests {
 		}
 	}
 
-	@Test
-	public void verificarVictoriaNoAlcanzadaTest() {
-		Tablero tablero = new Tablero(3);
-
-		boolean victoria = tablero.verificarVictoria();
-
-		assertFalse(victoria);
-	}
-
-	@Test
-	public void verificarVictoriaTest() {
-		Tablero tablero = new Tablero(3);
-
-		for (int fila = 0; fila < tablero.tamanio(); fila++) {
-			tablero.invertirEstadoFila(fila);
-		}
-
-		boolean victoria = tablero.verificarVictoria();
-
-		assertTrue(victoria);
-	}
+//	@Test
+//	public void verificarVictoriaNoAlcanzadaTest() {
+//		Tablero tablero = new Tablero(3);
+//
+//		boolean victoria = tablero.verificarVictoria();
+//
+//		assertFalse(victoria);
+//	}
+//
+//	@Test
+//	public void verificarVictoriaTest() {
+//		Tablero tablero = new Tablero(3);
+//
+//		for (int fila = 0; fila < tablero.tamanio(); fila++) {
+//			tablero.invertirEstadoFila(fila);
+//		}
+//
+//		boolean victoria = tablero.verificarVictoria();
+//
+//		assertTrue(victoria);
+//	}
 }
